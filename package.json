@@ -1,6 +1,6 @@
 {
   "name": "@muselesscreator/get-effects",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "React toolkit for writing and testing react components",
   "main": "dist/index.ts",
   "release": {
