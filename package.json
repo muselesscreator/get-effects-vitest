@@ -1,5 +1,5 @@
 {
-  "name": "@muselesscreator/react-unit-test-utils",
+  "name": "@muselesscreator/get-effects",
   "version": "0.0.0",
   "description": "React toolkit for writing and testing react components",
   "main": "dist/index.ts",
@@ -26,9 +26,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/muselesscreator/react-unit-test-utils.git"
+    "url": "git+https://github.com/muselesscreator/get-effects.git"
   },
-  "homepage": "https://github.com/muselesscreator/react-unit-test-utils#README",
+  "homepage": "https://github.com/muselesscreator/get-effects#README",
   "scripts": {
     "dev": "vite",
     "build": "tsc && tsup src/index.ts --format cjs,esm --minify --dts --legacy-output dist",
