@@ -1,6 +1,6 @@
 {
   "name": "@muselesscreator/react-shallow-snapshot-vitest",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "React shallow snapshot testing with vitest",
   "main": "dist/index.ts",
   "release": {
