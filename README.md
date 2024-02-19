@@ -1,49 +1,58 @@
-# get-effects
+# react-shallow-snapshot
 
-Simply utility for directly fetching use-effect mock calls based on their prerequisites.
+Library for maintaining tools to allow simple unit testing of React apps.
+
+The purpose of this library is to support testing patterns for react apps that focus on isolated unit tests and component snapshots.
+It provides a shallow renderer similar to Enzyme's, build from `react-test-renderer`, as well as a number of utilities focused on providing support for a react unit-testing ecosystem
 
 ## Utilities
 
-### `getEffect` - React useEffect hook testing utility method.
-Simple utility for grabbing useEffect calls based on a list of prerequisite values.
+### `shallow` - Shallow Renderer
+Provides a shallow render of a given react component.  
+#### Usage
+import renderer
+```js
+import { shallow } from '@edx/react-unit-test-utils';
+```
+Mock local components for shallow rendering
+```js
+jest.mock('./LocalComponent', () => 'LocalComponent');
+```
+Mock used component libraries (such as paragon) using provide `mockComponents` utility (see below).
+
+Generate render element
+```js
+const el = shallow(<MyComponent {...props} />);
+```
+Validate snapshots
+```js
+expect(el.snapshot).toMatchSnapshot();
+expect(el.instance.findByType(LocalComponent)[0].snapshot).toMatchSnapshot();
+```
+Inspect rendered component props and children.
+```js
+const localChild = el.instance.findByType(LocalComponent)[0];
+const localDiv = el.instance.findByType('div')[0];
+const localTestEl = el.instance.findByType('my-test-id')[0];
+// returned object is of the shape { props, type, children }
+expect(localChild.props.label).toEqual(myLabel);
+expect(localDiv.children[0].type).toEqual('h1');
+expect(localDiv.children[0].matches(<h1>My Header</h1>)).toEqual(true);
+```
+
+### `mockComponents` - Component library mocking utility
+Component library mocking utility intended for imported libraries of many complex components to be mocked.
 
 #### Usage
 ```js
-import React from 'react';
-import { getEffects } from '@edx/get-effects';
-
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useEffect: jest.fn(),
+jest.mock('@edx/paragon', () => jest.requireActual('@edx/react-unit-test-utils').mockComponents({
+  Button: 'Button',
+  Icon: 'Icon',
+  Form: {
+    Group: 'Form.Group',
+    Control: 'Form.Control',
+  },
 }));
 
-const useMyHook = ({ val0, val1, method1 }) => {
-  useEffect(() => {
-    method1(val0);
-  }, []);
-  useEffect(() => {
-    method1(val1);
-  }, [val1, method1]);
-};
-
-describe('useMyHook', () => {
-  describe('behavior', () => {
-    const val0 = 'initial-value';
-    const val1 = 'test-value';
-    const method1 = jest.fn();
-    beforeEach(() => { jest.clearAllMocks(); });
-    it('calls method1 with val0 on initial load', () => {
-      useMyHook({ val0, val1, method1 });
-      const cb = getEffect([], React)[0];
-      cb();
-      expect(method1).toHaveBeenCalledWith(val0);
-    });
-    it('calls method1 with val1 when either changes', () => {
-      useMyHook({ val0, val1, method1 });
-      const cb = getEffect([val1, method1], React)[0];
-      cb();
-      expect(method1).toHaveBeenCalledWith(val1);
-    });
-  });
-});
+// Provides mocks for <Button>, <Icon>, <Form>, <Form.Group>, and <Form.Control> with appropriate mocks to appear legibly in the snapshot.
 ```

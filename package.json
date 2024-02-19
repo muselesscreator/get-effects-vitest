@@ -1,7 +1,7 @@
 {
-  "name": "@muselesscreator/get-effects-vitest",
-  "version": "0.0.2",
-  "description": "React toolkit for writing and testing react components",
+  "name": "@muselesscreator/react-shallow-snapshot-vitest",
+  "version": "0.0.0",
+  "description": "React shallow snapshot testing with vitest",
   "main": "dist/index.ts",
   "release": {
     "branches": [
@@ -26,9 +26,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/muselesscreator/get-effects-vitest.git"
+    "url": "git+https://github.com/muselesscreator/react-shallow-snapshot-vitest.git"
   },
-  "homepage": "https://github.com/muselesscreator/get-effects-vitest#README",
+  "homepage": "https://github.com/muselesscreator/react-shallow-snapshot-vitest#README",
   "scripts": {
     "dev": "vite",
     "build": "tsc && tsup src/index.ts --format cjs,esm --minify --dts --legacy-output dist",
